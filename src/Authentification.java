@@ -26,11 +26,13 @@ public class Authentification extends JFrame implements ActionListener {
     public Connection conn;
     public PreparedStatement statement = null;
     public ResultSet resultat;
+    private ImageIcon status;
 
 
     public Authentification() {
 
         super();
+
         this.setTitle(" QUICI ");
         this.setSize(new Dimension(400, 200));
         this.setLocationRelativeTo(null);
@@ -69,21 +71,57 @@ public class Authentification extends JFrame implements ActionListener {
         annuler.setBounds(225, 100, 82, 20);
 
         valider.addActionListener(this);
+        annuler.addActionListener(this);
 
         this.setVisible(true);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     }
-    public void actionPerformed(ActionEvent e){
-        String testLogin = login1.getText();
-        String testPassword = mdp1.getText();
-        System.out.println(testLogin);
-        try {
-            CheckingAuthentification ca = new CheckingAuthentification(testLogin,testPassword);
-            ca.actionPerformed(e);
-        } catch (Exception e2) {
-            e2.printStackTrace();
+
+    public void actionPerformed(ActionEvent e) {
+        Object source = e.getSource();
+
+        if (source == valider) {
+            boolean working = false;
+            String testLogin = login1.getText();
+            String testPassword = mdp1.getText();
+            System.out.println(testLogin);
+            try {
+                CheckingAuthentification ca = new CheckingAuthentification(testLogin, testPassword, working);
+                do {
+                    ca.actionPerformed(e);
+                } while (CheckingAuthentification.working = false);
+                conn = DriverManager.getConnection(ca.getUrl(),ca.getLogin1(),ca.getPasswd());
+                System.out.println(conn.getSchema());
+                setVisible(false);
+                dispose();
+                new Window(conn, testLogin);
+
+
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
         }
+        if (source == annuler) {
+            this.dispose();
+        }
+
     }
+
+
+    public static void main(String[] args) {
+
+        SwingUtilities.invokeLater(new Runnable() {
+
+            public void run() {
+                Authentification identification = new Authentification();
+
+            }
+        });
+
+
+    }
+
 
 }
 

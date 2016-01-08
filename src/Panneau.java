@@ -7,21 +7,19 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 
 public class Panneau extends JPanel{
-    private Color color = Color.white;
+    private Color color = Color.lightGray;
     private static int COUNT = 0;
-    private String message = "";
+    private String message = "POPOPO";
 
     public Panneau() {
 
     }
-    public Panneau(int x, int y, int w, int h){
-        this.setBounds(x,y,x,h);
-    }
     public void paintComponent(Graphics g){
-        g.setColor(this.color);
-        g.fillRect(0, 0, this.getWidth(), this.getHeight());
-        g.setColor(Color.white);
-        g.setFont(new Font("Arial", Font.BOLD, 15));
-        g.drawString(this.message, 10, 20);
-    }
+    g.setColor(this.color);
+    g.fillRect(0, 0, this.getWidth(), this.getHeight());
+    g.setFont(new Font("Arial", Font.BOLD, 15));
+    g.drawString(this.message, 10, 20);
+    // Synchronize circle
+    g.drawOval(1100, 10, 35, 35);
+}
 }
